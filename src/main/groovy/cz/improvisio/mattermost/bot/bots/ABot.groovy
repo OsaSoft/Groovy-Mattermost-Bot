@@ -1,22 +1,32 @@
 package cz.improvisio.mattermost.bot.bots
 
 import cz.improvisio.mattermost.bot.service.MatterMostService
+import cz.improvisio.mattermost.dataTypes.User
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class ABot implements Runnable {
+	@Autowired
 	MatterMostService matterMostService
 
 	String username
 	String password
 	String token
 
+	User user
+
 	ABot(MatterMostService matterMostService) {
 		this.matterMostService = matterMostService
 	}
 
 	ABot init() {
-		token = matterMostService.login(username, password)
-		token ? this : null
+		def result = matterMostService.login(username, password)
+		if (!result) {
+			return null
+		}
+
+		token = result.token
+		user = result.user
+		this
 	}
 
 	String getUsername() {

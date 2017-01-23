@@ -1,5 +1,6 @@
 package cz.improvisio.mattermost.bot.service
 
+import cz.improvisio.mattermost.dataTypes.User
 import groovy.util.logging.Slf4j
 import groovyx.net.http.RESTClient
 import org.apache.http.client.ClientProtocolException
@@ -75,7 +76,7 @@ class MatterMostService {
 		mattermost = new RESTClient(url, JSON)
 	}
 
-	String login(String username, String password) throws ClientProtocolException {
+	LoginResult login(String username, String password) {
 		try {
 			//login and get token
 			def resp = mattermost.post(
@@ -83,12 +84,29 @@ class MatterMostService {
 					body: [login_id: username, password: password]
 			)
 
-			resp.headers.Token
-		} catch (ex) {
-			log.error "Failed to log in, status=${ex.response.status}"
+			def user = new User(resp.data as HashMap<String, Object>)
+
+			new LoginResult(resp.headers.Token, user)
+		} catch (ClientProtocolException ex) {
+			log.error "Failed to log in, status=${ex?.response?.status}, message=${ex?.response?.data}"
 			null
 		}
 	}
+
+	boolean logout(String token) {
+		try {
+			def resp = mattermost.post(
+					path: ENDPOINTS.LOGOUT
+			)
+
+			resp.status == 200
+		} catch (ex) {
+			log.error "Failed to log out, status=${ex?.response?.status}, message=${ex?.response?.data}"
+			false
+		}
+	}
+
+
 
 	boolean sendMessage(String token, String team, String channel, String message) {
 		try {
@@ -100,8 +118,18 @@ class MatterMostService {
 
 			resp.status == 200
 		} catch (ex) {
-			log.error "Failed to send message, status=${ex.response.status}"
+			log.error "Failed to send message, status=${ex?.response?.status}, message=${ex?.response?.data}"
 			false
 		}
+	}
+}
+
+class LoginResult {
+	String token
+	User user
+
+	LoginResult(String token, User user) {
+		this.token = token
+		this.user = user
 	}
 }

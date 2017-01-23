@@ -28,23 +28,27 @@ class MatterMostServiceIntegrationTest extends Specification {
 
 	}
 
-	def "login returns proper token with correct login data"() {
+	def "login returns proper token and user with correct login data"() {
 		when:
-			def token = service.login(testUsername, testPassword)
+			def result = service.login(testUsername, testPassword)
 		then:
-			token && token in String
+			result
+		and:
+			result.token
+		and:
+			result.user
 	}
 
 	def "login errors"() {
 		when:
-			def token = service.login("wrongName", "wrongPass")
+			def result = service.login("wrongName", "wrongPass")
 		then:
-			!token
+			!result
 	}
 
 	def "send message works"() {
 		given:
-			def token = service.login(testUsername, testPassword)
+			def token = service.login(testUsername, testPassword).token
 
 		expect:
 			service.sendMessage(token, testTeam, testChannel, "Test mate!")
@@ -53,7 +57,7 @@ class MatterMostServiceIntegrationTest extends Specification {
 	@Unroll
 	def "send message fails to nonexisting team/channel=#team/#channel"() {
 		given:
-			def token = service.login(testUsername, testPassword)
+			def token = service.login(testUsername, testPassword).token
 
 		expect:
 			!service.sendMessage(token, team, channel, "Shouldnt see this!")

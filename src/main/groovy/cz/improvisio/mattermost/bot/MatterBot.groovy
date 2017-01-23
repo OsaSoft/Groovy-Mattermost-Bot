@@ -1,6 +1,5 @@
 package cz.improvisio.mattermost.bot
 
-import cz.improvisio.mattermost.bot.bots.ABot
 import cz.improvisio.mattermost.bot.service.MatterMostService
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired

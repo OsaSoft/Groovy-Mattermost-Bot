@@ -16,7 +16,7 @@ abstract class ABot implements Runnable {
 
 	ABot init() {
 		token = matterMostService.login(username, password)
-		this
+		token ? this : null
 	}
 
 	String getUsername() {

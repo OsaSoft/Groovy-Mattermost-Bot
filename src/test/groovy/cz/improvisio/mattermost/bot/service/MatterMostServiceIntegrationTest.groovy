@@ -1,8 +1,9 @@
 package cz.improvisio.mattermost.bot.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.TestPropertySource
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -10,7 +11,6 @@ import spock.lang.Unroll
 /**
  * Be careful with rate limits while running these tests!
  */
-@ContextConfiguration
 @SpringBootTest
 class MatterMostServiceIntegrationTest extends Specification {
 	@Shared testUsername = "bot@bot.com"

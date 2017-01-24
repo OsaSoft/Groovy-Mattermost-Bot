@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
  *
  * Might turn this into a separate mini-library
  */
-@Component
 class Validator {
 	Validator() {
 	}

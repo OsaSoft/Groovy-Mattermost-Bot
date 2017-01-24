@@ -15,8 +15,6 @@ class ValidatorTest extends Specification {
 	@Unroll
 	def "Test validation"() {
 		given:
-			def validator = new Validator()
-		and:
 			def validatable = new ValidatableObj()
 			validatable.with {
 				alpha = alphaVal
@@ -27,7 +25,7 @@ class ValidatorTest extends Specification {
 			}
 
 		expect:
-			validator.isValid(validatable) == isValid && validatable.validationErrors == valErrs
+			validatable.isValid() == isValid && validatable.validationErrors == valErrs
 
 		where:
 			alphaVal | numVal   | alphanumVal  | maxSizeVal     | minSizeVal | isValid | valErrs

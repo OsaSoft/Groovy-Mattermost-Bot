@@ -11,6 +11,9 @@ import javax.annotation.PostConstruct
 
 import static groovyx.net.http.ContentType.JSON
 
+/**
+ * @author OsaSoft https://github.com/OsaSoft
+ */
 @Service
 @Slf4j
 class MatterMostService {

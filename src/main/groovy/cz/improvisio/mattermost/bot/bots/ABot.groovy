@@ -4,6 +4,9 @@ import cz.improvisio.mattermost.bot.service.MatterMostService
 import cz.improvisio.mattermost.dataTypes.User
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * @author OsaSoft https://github.com/OsaSoft
+ */
 abstract class ABot implements Runnable {
 	@Autowired
 	MatterMostService matterMostService

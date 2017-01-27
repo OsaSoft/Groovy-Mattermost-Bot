@@ -5,6 +5,7 @@ import groovy.util.logging.Slf4j
 
 /**
  * Params as of Mattermost v. 3.6.0
+ * @author OsaSoft https://github.com/OsaSoft
  */
 @ToString
 @Slf4j

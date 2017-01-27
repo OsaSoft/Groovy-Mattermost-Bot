@@ -3,6 +3,9 @@ package cz.improvisio.mattermost.util.validator
 import spock.lang.Specification
 import spock.lang.Unroll
 
+/**
+ * @author OsaSoft https://github.com/OsaSoft
+ */
 class ValidatorTest extends Specification {
 	void setup() {
 
